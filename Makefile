@@ -15,6 +15,8 @@ upload: $(target)
 	ssh -t $(private_web_server_for_turingwasright) sudo mv $< www
 	ssh -t $(private_web_server_for_turingwasright) sudo chown www:www www/$<
 	ssh -t $(private_web_server_for_turingwasright) ls -l www/
+	@echo
+	@echo "Remember: this only uploads the file index.html to the web server."
 
 vi:
 	$(editor_cmd) $(target)
