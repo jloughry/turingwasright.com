@@ -1,11 +1,8 @@
-var ctx = document.getElementById('high_side_canvas').getContext('2d');
-var img = new Image();
-
-function setSize(canvas_name) {
+function resize_to_fit(canvas_name) {
     var canvas = document.getElementById(canvas_name);
 
-    canvas.width = window.innerWidth / 2 - 10;
-    canvas.height = window.innerHeight / 2 - 10;
+    canvas.height = window.innerHeight / 2;
+    canvas.width = window.innerWidth / 2 - 2;
 }
 
 function label(canvas_name, label) {
@@ -30,15 +27,29 @@ function xOut(canvas_name) {
     context.stroke();
 }
 
-setSize("high_side_canvas");
-setSize("low_side_canvas");
-setSize("monitoring_canvas");
-setSize("control_canvas");
+function resize_all() {
+    resize_to_fit("high_side_canvas");
+    resize_to_fit("low_side_canvas");
+    resize_to_fit("monitoring_canvas");
+    resize_to_fit("control_canvas");
+}
 
-label("high_side_canvas", "High Side")
-label("low_side_canvas", "Low Side")
-label("monitoring_canvas", "Monitor")
-label("control_canvas", "Control")
+function label_all() {
+    label("high_side_canvas", "High Side")
+    label("low_side_canvas", "Low Side")
+    label("monitoring_canvas", "Monitor")
+    label("control_canvas", "Control")
+}
 
-xOut("high_side_canvas")
+function initialise() {
+    resize_all();
+    label_all();
+    xOut("high_side_canvas")
+}
+
+window.onload = function() {
+    initialise();
+}
+
+window.addEventListener("resize",initialise)
 

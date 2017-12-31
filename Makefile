@@ -1,5 +1,10 @@
 target = index.html
 
+simulation_environment = CDS_simulation_environment
+sim = $(simulation_environment).html
+css = $(simulation_environment).css
+js  = $(simulation_environment).js
+
 include ../notes.new/private_for_turingwasright.com.mk
 
 editor = vi
@@ -20,6 +25,15 @@ upload: $(target)
 
 vi:
 	$(editor_cmd) $(target)
+
+sim:
+	$(editor_cmd) $(sim)
+
+css:
+	$(editor_cmd) $(css)
+
+js:
+	$(editor_cmd) $(js)
 
 $(commit_message): $(get_commit_message)
 	@./$(get_commit_message)
