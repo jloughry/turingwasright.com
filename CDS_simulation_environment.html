@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 
 <!-- multiple canvases, with the background drawn in one and the foreground
-drawn in another, is a useful performance optimisation. -->
+drawn in another, is a useful performance optimisation. To do it, use
+position:absolute and z-index: 0, 1, 2, ... I think they're automatically
+transparent. -->
 
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <link rel="stylesheet" href="CDS_simulation_environment.css"/>
+<meta name="author" content="Joe Loughry"/>
+<meta name="description" content="CDS Simulation Environment"/>
+<link rel="icon" href="favicon.ico"/>
 <title>CDS Simulation Environment v0.3</title>
 </head>
 <body>
