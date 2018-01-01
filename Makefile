@@ -29,6 +29,8 @@ vi:
 sim:
 	$(editor_cmd) $(sim)
 
+html: sim
+
 css:
 	$(editor_cmd) $(css)
 
