@@ -1,5 +1,5 @@
 border_thickness = 8; // border around canvases
-inter_canvas_gap = 6; // space between canvases
+inter_canvas_gap = 3; // space between canvases
 empty_canvas = "lightgrey";
 
 function size_and_position(canvas_name) {
@@ -12,8 +12,8 @@ function size_and_position(canvas_name) {
     var center_y_with_gap = center_y + inter_canvas_gap / 2;
 
     // Size the canvas to fit.
-    canvas.width = center_x - (inter_canvas_gap / 2);
-    canvas.height = center_y - (inter_canvas_gap / 2);
+    canvas.width = center_x - (2 * inter_canvas_gap);
+    canvas.height = center_y - (2 * inter_canvas_gap);
 
     // Position the canvas in the window.
     center_x += "px";
@@ -28,15 +28,15 @@ function size_and_position(canvas_name) {
 
     switch(canvas_name) {
         case "high_side_canvas":
-            position_left = "0px";
-            position_top = "0px";
+            position_left = inter_canvas_gap + "px";
+            position_top = inter_canvas_gap + "px";
             canvas.style.zIndex = 1;
             context.fillStyle = empty_canvas;
             context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "high_side_classification_banner_canvas":
-            position_left = "0px";
-            position_top = "0px";
+            position_left = inter_canvas_gap + "px";
+            position_top = inter_canvas_gap + "px";
             canvas.width -= adjustment;
             canvas.height -= adjustment;
             canvas.style.zIndex = 99; // always on top
@@ -58,14 +58,14 @@ function size_and_position(canvas_name) {
             classify("low_side_classification_banner_canvas", "unclas");
             break;
         case "monitoring_canvas":
-            position_left = "0px";
+            position_left = inter_canvas_gap + "px";
             position_top = center_y_with_gap;
             canvas.style.zIndex = 1;
             context.fillStyle = empty_canvas;
             context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "monitoring_classification_banner_canvas":
-            position_left = "0px";
+            position_left = inter_canvas_gap + "px";
             position_top = center_y_with_gap;
             canvas.width -= adjustment;
             canvas.height -= adjustment;
@@ -74,14 +74,14 @@ function size_and_position(canvas_name) {
             break;
         case "control_canvas":
             position_left = center_x_with_gap;
-            position_top = "0px"
+            position_top = inter_canvas_gap + "px"
             canvas.style.zIndex = 1;
             context.fillStyle = empty_canvas;
             context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "control_classification_banner_canvas":
             position_left = center_x_with_gap;
-            position_top = "0px"
+            position_top = inter_canvas_gap + "px"
             canvas.width -= adjustment;
             canvas.height -= adjustment;
             canvas.style.zIndex = 99; // always on top

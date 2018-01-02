@@ -1,9 +1,10 @@
 target = index.html
 
-simulation_environment = CDS_simulation_environment
-sim = $(simulation_environment).html
-css = $(simulation_environment).css
-js  = $(simulation_environment).js
+CDSEE = ./CDSEE/CDSEE
+
+sim = $(CDSEE)_single_monitor.html
+js  = $(CDSEE)_single_monitor.js
+css = $(CDSEE).css
 
 include ../notes.new/private_for_turingwasright.com.mk
 
