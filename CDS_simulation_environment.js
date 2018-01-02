@@ -1,5 +1,6 @@
 border_thickness = 8; // border around canvases
 inter_canvas_gap = 6; // space between canvases
+empty_canvas = "lightgrey";
 
 function size_and_position(canvas_name) {
     var canvas = document.getElementById(canvas_name);
@@ -29,9 +30,9 @@ function size_and_position(canvas_name) {
         case "high_side_canvas":
             position_left = "0px";
             position_top = "0px";
-            context.fillStyle = "lightgrey";
-            context.fillRect(0, 0, canvas.width, canvas.height);
             canvas.style.zIndex = 1;
+            context.fillStyle = empty_canvas;
+            context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "high_side_classification_banner_canvas":
             position_left = "0px";
@@ -44,9 +45,9 @@ function size_and_position(canvas_name) {
         case "low_side_canvas":
             position_left = center_x_with_gap;
             position_top = center_y_with_gap;
-            context.fillStyle = "lightgrey";
-            context.fillRect(0, 0, canvas.width, canvas.height);
             canvas.style.zIndex = 1;
+            context.fillStyle = empty_canvas;
+            context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "low_side_classification_banner_canvas":
             position_left = center_x_with_gap;
@@ -59,9 +60,9 @@ function size_and_position(canvas_name) {
         case "monitoring_canvas":
             position_left = "0px";
             position_top = center_y_with_gap;
-            context.fillStyle = "navy";
-            context.fillRect(0, 0, canvas.width, canvas.height);
             canvas.style.zIndex = 1;
+            context.fillStyle = empty_canvas;
+            context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "monitoring_classification_banner_canvas":
             position_left = "0px";
@@ -74,9 +75,9 @@ function size_and_position(canvas_name) {
         case "control_canvas":
             position_left = center_x_with_gap;
             position_top = "0px"
-            context.fillStyle = "darkgreen";
-            context.fillRect(0, 0, canvas.width, canvas.height);
             canvas.style.zIndex = 1;
+            context.fillStyle = empty_canvas;
+            context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "control_classification_banner_canvas":
             position_left = center_x_with_gap;
@@ -101,8 +102,15 @@ function label(canvas_name, label) {
     context.font = "bold 20px sans-serif";
     context.textBaseline = "middle";
     context.textAlign = "center";
-    context.fillStyle = "black";
+    context.fillStyle = "brown";
     context.fillText(label, canvas.width / 2, canvas.height / 2);
+}
+
+function clear_canvas(canvas_name) {
+    var canvas = document.getElementById(canvas_name);
+    var context = canvas.getContext("2d");
+    context.fillStyle = empty_canvas;
+    context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function classify(canvas_name, security_label) {
@@ -146,13 +154,6 @@ function classify(canvas_name, security_label) {
     }
 }
 
-function label_all() {
-    label("high_side_canvas", "High Side")
-    label("low_side_canvas", "Low Side")
-    label("monitoring_canvas", "Monitor")
-    label("control_canvas", "Control")
-}
-
 function initialise() {
     size_and_position("high_side_canvas");
     size_and_position("high_side_classification_banner_canvas");
@@ -162,13 +163,52 @@ function initialise() {
     size_and_position("monitoring_classification_banner_canvas");
     size_and_position("control_canvas");
     size_and_position("control_classification_banner_canvas");
-    classify("control_classification_banner_canvas", "SYSTEM HIGH");
-    label_all();
+}
+
+// Source: https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// I don't think you can pass parameters to an eventListener,
+// so we have to write four almost identical functions here.
+
+async function high_side_label() {
+    label("high_side_canvas", "High Side");
+    await sleep(1000);
+    clear_canvas("high_side_canvas");
+}
+
+async function low_side_label() {
+    label("low_side_canvas", "Low Side");
+    await sleep(1000);
+    clear_canvas("low_side_canvas");
+}
+
+async function monitoring_label() {
+    label("monitoring_canvas", "Monitor");
+    await sleep(1000);
+    clear_canvas("monitoring_canvas");
+}
+
+async function control_label() {
+    label("control_canvas", "Control");
+    await sleep(1000);
+    clear_canvas("control_canvas");
+}
+
+function setup_event_listeners() {
+    window.addEventListener("resize", initialise);
+    document.getElementById("high_side_classification_banner_canvas").addEventListener("mousedown", high_side_label);
+    document.getElementById("low_side_classification_banner_canvas").addEventListener("mousedown", low_side_label);
+    document.getElementById("monitoring_classification_banner_canvas").addEventListener("mousedown", monitoring_label);
+    document.getElementById("control_classification_banner_canvas").addEventListener("mousedown", control_label);
 }
 
 window.onload = function() {
     initialise();
 }
 
-window.addEventListener("resize",initialise)
+setup_event_listeners()
 
