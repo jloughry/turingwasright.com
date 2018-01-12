@@ -2,8 +2,8 @@ target = index.html
 
 CDSEE = ./CDSEE/CDSEE
 
-sim = $(CDSEE)_single_monitor.html
-js  = $(CDSEE)_single_monitor.js
+sim = $(CDSEE)_multiple_window.html
+js  = $(CDSEE)_multiple_window.js
 css = $(CDSEE).css
 
 include ../notes.new/private_for_turingwasright.com.mk
