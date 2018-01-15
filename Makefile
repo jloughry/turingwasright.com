@@ -11,18 +11,41 @@ include ../notes.new/private_for_turingwasright.com.mk
 editor = vi
 
 all::
-	@echo "Use make upload to copy HTML to web server."
+	@echo "Use make upload to copy index.html to web server."
+	@echo "Use make upload-all to re-copy everything."
 
 clean::
 	@echo "This is clean in the local Makefile"
 
+website_directory = www/turingwasright.com/
+
 upload: $(target)
 	scp $< $(private_web_server_for_turingwasright):
-	ssh -t $(private_web_server_for_turingwasright) sudo mv $< www
-	ssh -t $(private_web_server_for_turingwasright) sudo chown www:www www/$<
-	ssh -t $(private_web_server_for_turingwasright) ls -l www/
+	ssh -t $(private_web_server_for_turingwasright) sudo mv \
+		$< $(website_directory)
+	ssh -t $(private_web_server_for_turingwasright) sudo chown www:www \
+		$(website_directory)$<
+	ssh -t $(private_web_server_for_turingwasright) ls -l \
+		$(website_directory)
 	@echo
 	@echo "Remember: this only uploads the file index.html to the web server."
+
+all_website_files = index.html mu.css \
+	favicon.ico favicon-16x16.png favicon-32x32.png \
+	android-chrome-192x192.png android-chrome-512x512.png manifest.json \
+	apple-touch-icon.png safari-pinned-tab.svg \
+	mstile-150x150.png browserconfig.xml
+
+upload-all:
+	scp $(all_website_files) $(private_web_server_for_turingwasright):
+	ssh -t $(private_web_server_for_turingwasright) sudo mv \
+		$(all_website_files) $(website_directory)
+	ssh -t $(private_web_server_for_turingwasright) sudo chown www:www \
+		$(website_directory)\*
+	ssh -t $(private_web_server_for_turingwasright) ls -l \
+		$(website_directory)
+
+upload_all: upload-all
 
 vi:
 	$(editor_cmd) $(target)
