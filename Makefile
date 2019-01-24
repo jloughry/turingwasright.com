@@ -34,13 +34,13 @@ all_website_files = index.html mu.css \
 	favicon.ico favicon-16x16.png favicon-32x32.png \
 	android-chrome-192x192.png android-chrome-512x512.png manifest.json \
 	apple-touch-icon.png safari-pinned-tab.svg \
-	mstile-150x150.png browserconfig.xml
+	mstile-150x150.png browserconfig.xml mail/config-v1.1.xml
 
 upload-all:
 	scp $(all_website_files) $(private_web_server_for_turingwasright):
 	ssh -t $(private_web_server_for_turingwasright) sudo mv \
 		$(all_website_files) $(website_directory)
-	ssh -t $(private_web_server_for_turingwasright) sudo chown www:www \
+	ssh -t $(private_web_server_for_turingwasright) sudo chown -R www:www \
 		$(website_directory)\*
 	ssh -t $(private_web_server_for_turingwasright) ls -l \
 		$(website_directory)
